@@ -8,15 +8,13 @@
 1、添加seq/ack机制，确保数据成功发送给对方；
 2、添加发送和接收缓冲区；
 3、添加超时重传机制。
-送端发送数据时，发送定长文件数据块，带块号。
+发送端发送数据时，发送定长文件数据块，带块号。
 数据到达接收端后接收端放入缓存，并发送一个ack=x的包，表示已经收到数据。
 发送端收到了ack包后，删除定时器。
 定时任务检查是否需要重传数据。
 
-实验要求：
-1.下层使用UDP协议（即使用数据包套接字完成本次程序）；
-2.完成客户端和服务器端程序；
-3.实现可靠的文件传输：能可靠下载文件，能同时下载文件。
+下层使用UDP协议（即使用数据包套接字）
+能可靠下载文件，能同时下载文件。
 */
 
 Dialog::Dialog(QWidget *parent)
@@ -34,7 +32,7 @@ Dialog::Dialog(QWidget *parent)
         idpt[i] = 0;
         seversock[i]->bind(11005 + curclient,QUdpSocket::ShareAddress);
         //Lambda匿名函数，传参
-        connect(seversock[i],&QUdpSocket::readyRead,this,[=]{getdata(i);});
+        connect(seversock[i], &QUdpSocket::readyRead, this, [=]{ getdata(i); });
         curclient += 1;
     }
     tf = new QTimer;
